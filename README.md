@@ -1,5 +1,7 @@
 # Formation Webpack
 
+[![Build Status](https://travis-ci.org/DevInstitut/formation-webpack.svg?branch=master)](https://travis-ci.org/DevInstitut/formation-webpack)
+
 * Version en ligne : http://www.dev-institut.fr/formation-webpack
 * Contribuer : https://github.com/DevInstitut/formation-webpack
 
