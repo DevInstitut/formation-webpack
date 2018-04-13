@@ -1,12 +1,19 @@
 {
-  "title": "Formation ESNEXT",
+  "title": "Formation Webpack",
   "author": "Rossi Oddet",
   "plugins": [
-    "auto-summary"
+    "auto-summary",
+     "github-edit"
   ],
   "ignores": [
     "_book",
     "node_modules",
     "sources"
-  ]
+  ],
+  "pluginsConfig": {
+    "github-edit": {
+      "repo": "DevInstitut/formation-webpack",
+      "branch": "master"
+    }
+  }
 }
