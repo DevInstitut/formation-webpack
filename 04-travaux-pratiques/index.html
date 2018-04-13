@@ -303,68 +303,74 @@ npm init -y
 </ul>
 <pre><code>npm install webpack --save-dev
 </code></pre><ul>
-<li><p>Visualiser le r&#xE9;pertoire <em>node_modules/.bin</em>.</p>
-</li>
-<li><p>Ex&#xE9;cuter Webpack</p>
-</li>
+<li>Installer le client Webpack</li>
 </ul>
-<pre><code>node_modules/.bin/webpack
-
-No configuration file found and no output filename configured via CLI option.
-A configuration file could be named &apos;webpack.config.js&apos; in the current directory.
-Use --help to display the CLI options.
+<pre><code>npm install --save-dev webpack-cli
 </code></pre><ul>
-<li>Cr&#xE9;er les fichiers <em>app/index.js</em> et <em>app/serviceA.js</em>.</li>
+<li>Visualiser le r&#xE9;pertoire <em>node_modules/.bin</em>.</li>
+</ul>
+<ul>
+<li>Cr&#xE9;er les fichiers <code>dist/index.html</code>, <code>src/index.js</code> et <code>src/serviceTitre.js</code>.</li>
 </ul>
 <pre><code>/premiers-pas-webpack
-    /app
+    /dist
+        index.html
+    /src
         index.js
-        serviceA.js
+        serviceTitre.js
 </code></pre><ul>
-<li>Compl&#xE9;ter les fichiers :</li>
+<li>Compl&#xE9;ter le fichier <code>dist/index.html</code> :</li>
 </ul>
-<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports.afficher = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Service A&quot;</span>);
-};
-</code></pre>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> serviceA = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./serviceA&quot;</span>);
+<pre><code class="lang-js">&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot;
+          content=&quot;width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;D&#xE9;mo Webpack&lt;/title&gt;
 
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;bonjour webpack !&quot;</span>);
+    &lt;script src=&quot;main.js&quot;&gt;&lt;/script&gt;
 
-serviceA.afficher();
+&lt;/head&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 <ul>
-<li>Ex&#xE9;cuter la commande :</li>
+<li>Compl&#xE9;ter le fichier <code>app/serviceTitre.js</code> :</li>
 </ul>
-<pre><code>node_modules/.bin/webpack app/index.js build/bundle.js
-</code></pre><ul>
-<li><p>Observer le contenu du fichier <em>build/bundle.js</em>.</p>
-</li>
-<li><p>Cr&#xE9;er un fichier <em>webpack.config.js</em></p>
-</li>
-</ul>
-<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = {
-    <span class="hljs-comment">// d&#xE9;finition des points d&apos;entr&#xE9;e</span>
-    <span class="hljs-comment">// il est possible de d&#xE9;finir plusieurs points d&apos;entr&#xE9;e</span>
-    entry: <span class="hljs-string">&apos;./app/index.js&apos;</span>,
-
-    output: {
-        path: <span class="hljs-string">&quot;build&quot;</span>,
-        filename: <span class="hljs-string">&quot;bundle.js&quot;</span>
-    }
+<pre><code class="lang-js"><span class="hljs-comment">// ins&#xE9;rer titre</span>
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">insererTitre</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&apos;body&apos;</span>).insertAdjacentHTML(<span class="hljs-string">&apos;afterbegin&apos;</span>, <span class="hljs-string">&apos;&lt;h1&gt;D&#xE9;mo Webpack&lt;/h1&gt;&apos;</span>);
 }
 </code></pre>
 <ul>
+<li>Compl&#xE9;ter le fichier <code>src/serviceTitre.js</code> :</li>
+</ul>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { insererTitre } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./serviceTitre&apos;</span>;
+
+
+<span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">&apos;DOMContentLoaded&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+    insererTitre();
+});
+</code></pre>
+<ul>
 <li>Ex&#xE9;cuter la commande :</li>
 </ul>
 <pre><code>node_modules/.bin/webpack
 </code></pre><ul>
-<li>Compl&#xE9;ter le fichier <em>package.json</em></li>
+<li><p>Visualiser le contenu du fichier g&#xE9;n&#xE9;r&#xE9; <code>dist/main.js</code>.</p>
+</li>
+<li><p>Observer le contenu du fichier <em>build/main.js</em>.</p>
+</li>
+<li><p>Afficher la page <code>dist/index.html</code> et v&#xE9;rifier l&apos;affichage du titre.</p>
+</li>
+<li><p>Compl&#xE9;ter le fichier <em>package.json</em></p>
+</li>
 </ul>
 <pre><code class="lang-js">...
 <span class="hljs-string">&quot;scripts&quot;</span>: {
     ...
-    <span class="hljs-string">&quot;build&quot;</span> : <span class="hljs-string">&quot;webpack&quot;</span>,
+    <span class="hljs-string">&quot;build&quot;</span> : <span class="hljs-string">&quot;webpack --mode production&quot;</span>,
     ...
 },
 ...
@@ -373,61 +379,30 @@ serviceA.afficher();
 <li>Ex&#xE9;cuter la commande :</li>
 </ul>
 <pre><code>npm run build
-</code></pre><h2 id="plugin">Plugin</h2>
-<h3 id="uglifyjswebpackplugin">UglifyjsWebpackPlugin</h3>
-<p>Nous allons &#xE0; pr&#xE9;sent <em>minifier</em> le fichier g&#xE9;n&#xE9;r&#xE9; &#xE0; l&apos;aide du plugin <em>UglifyjsWebpackPlugin</em>.</p>
+</code></pre><h2 id="configuration">Configuration</h2>
 <ul>
-<li>Installer le plugin</li>
+<li>Cr&#xE9;er un fichier <em>webpack.config.js</em></li>
 </ul>
-<pre><code>npm i --save-dev uglifyjs-webpack-plugin
-</code></pre><ul>
-<li>Configurer le plugin</li>
-</ul>
-<pre><code class="lang-js">...
-var UglifyJSPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;uglifyjs-webpack-plugin&apos;</span>); &lt;1&gt;
-
-module.exports = {
-    entry: { ...},
-    output: { ...},
-    plugins: [
-        new UglifyJSPlugin() &lt;2&gt;
-    ]
-};
-</code></pre>
-<ul>
-<li>Ex&#xE9;cuter la commande :</li>
-</ul>
-<pre><code>npm run build
-</code></pre><ul>
-<li>Observer le fichier <em>./build/bundle.js</em>.</li>
-</ul>
-<h3 id="htmlwebpackplugin">HtmlWebpackPlugin</h3>
-<ul>
-<li>Installer le plugin :</li>
-</ul>
-<pre><code>npm install html-webpack-plugin --save-dev
-</code></pre><ul>
-<li>Configurer le plugin</li>
-</ul>
-<pre><code class="lang-js">...
-var HtmlWebpackPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;html-webpack-plugin&apos;</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;path&apos;</span>);
 
 <span class="hljs-built_in">module</span>.exports = {
-    entry: {...},
-
-    output: {...},
-    plugins: [
-       ...,
-        <span class="hljs-keyword">new</span> HtmlWebpackPlugin()
-    ]
+    entry: <span class="hljs-string">&apos;./src/index.js&apos;</span>,
+    output: {
+        filename: <span class="hljs-string">&apos;bundle.js&apos;</span>,
+        path: path.resolve(__dirname, <span class="hljs-string">&apos;dist&apos;</span>)
+    }
 };
 </code></pre>
+<p>Noter que le nom du fichier de sortie est d&#xE9;sormais <code>dist/bundle.js</code> et non <code>dist/main.js</code>.</p>
 <ul>
 <li>Ex&#xE9;cuter la commande :</li>
 </ul>
 <pre><code>npm run build
 </code></pre><ul>
-<li>Observer le fichier <em>./build/index.html</em>.</li>
+<li><p>V&#xE9;rifier la pr&#xE9;sence du fichier <code>dist/bundle.js</code>.</p>
+</li>
+<li><p>Modifier le fichier <code>index.html</code> pour qu&apos;il soit coh&#xE9;rent avec notre nouvelle configuration et supprimer le fichier <code>main.js</code>.</p>
+</li>
 </ul>
 <h2 id="webpack-dev-server">Webpack Dev Server</h2>
 <ul>
@@ -435,17 +410,42 @@ var HtmlWebpackPlugin = <span class="hljs-built_in">require</span>(<span class="
 </ul>
 <pre><code>npm install webpack-dev-server --save-dev
 </code></pre><ul>
-<li>Ajouter une t&#xE2;che NPM <em>server</em> :</li>
+<li>Compl&#xE9;ter la configuration Webpack comme suit :</li>
+</ul>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;path&apos;</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+    entry: <span class="hljs-string">&apos;./src/index.js&apos;</span>,
+    output: {
+        filename: <span class="hljs-string">&apos;bundle.js&apos;</span>,
+        path: path.resolve(__dirname, <span class="hljs-string">&apos;dist&apos;</span>)
+    },
+    devServer: {
+        contentBase: path.join(__dirname, <span class="hljs-string">&quot;dist&quot;</span>),
+        compress: <span class="hljs-literal">true</span>,
+        port: <span class="hljs-number">8081</span>
+    },
+    devtool: <span class="hljs-string">&quot;cheap-module-eval-source-map&quot;</span>,
+    mode : <span class="hljs-string">&quot;development&quot;</span>
+};
+</code></pre>
+<ul>
+<li>Ajouter une t&#xE2;che NPM <code>start</code> :</li>
 </ul>
 <pre><code class="lang-js">...
 <span class="hljs-string">&quot;scripts&quot;</span> : {
     ...
-    <span class="hljs-string">&quot;serve&quot;</span>: <span class="hljs-string">&quot;webpack-dev-server&quot;</span>,
+    <span class="hljs-string">&quot;start&quot;</span>: <span class="hljs-string">&quot;webpack-dev-server&quot;</span>,
     ...
 }
 </code></pre>
 <ul>
-<li>Tester le serveur Web avec <em>npm run serve</em>. V&#xE9;rifier le rechargement &#xE0; chaud de vos modifications.</li>
+<li><p>Tester le serveur Web avec <code>npm start</code>.</p>
+</li>
+<li><p>V&#xE9;rifier le rechargement &#xE0; chaud de vos modifications.</p>
+</li>
+<li><p>V&#xE9;rifier que vous pouvez faire du <em>debug</em> sur vos sources initiales via les outils de d&#xE9;veloppement de votre navigateur.</p>
+</li>
 </ul>
 
                                 
@@ -486,7 +486,7 @@ var HtmlWebpackPlugin = <span class="hljs-built_in">require</span>(<span class="
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Travaux Pratiques","level":"1.5","depth":1,"previous":{"title":"Webpack en développement","level":"1.4","depth":1,"path":"03-dev/README.md","ref":"03-dev/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["auto-summary"],"ignores":["_book","node_modules","sources"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"auto-summary":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Rossi Oddet","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Formation ESNEXT","gitbook":"*"},"file":{"path":"04-travaux-pratiques/README.md","mtime":"2018-04-12T09:33:10.810Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-12T09:34:35.317Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Travaux Pratiques","level":"1.5","depth":1,"previous":{"title":"Webpack en développement","level":"1.4","depth":1,"path":"03-dev/README.md","ref":"03-dev/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["auto-summary"],"ignores":["_book","node_modules","sources"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"auto-summary":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Rossi Oddet","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Formation ESNEXT","gitbook":"*"},"file":{"path":"04-travaux-pratiques/README.md","mtime":"2018-04-13T02:35:16.965Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T02:36:26.304Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
