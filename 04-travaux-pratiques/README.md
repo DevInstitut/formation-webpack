@@ -60,7 +60,7 @@ npm install --save-dev webpack-cli
 ```
 
 
-* Compléter le fichier `app/serviceTitre.js` :
+* Compléter le fichier `src/serviceTitre.js` :
 
 ```js
 // insérer titre
@@ -69,7 +69,7 @@ export function insererTitre() {
 }
 ```
 
-* Compléter le fichier `src/serviceTitre.js` :
+* Compléter le fichier `src/index.js` :
 
 ```js
 import { insererTitre } from './serviceTitre';
