@@ -2,7 +2,7 @@
 
 Webpack est un outil de _packaging_ pour le web.
 
-![bg](images/webpack-logo.png)
+![bg](../images/webpack-logo.png)
 
 Il permet de gérer plusieurs types de ressources :
 * JavaScript
