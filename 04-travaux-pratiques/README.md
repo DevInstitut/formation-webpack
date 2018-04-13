@@ -21,65 +21,63 @@ npm init -y
 npm install webpack --save-dev
 ```
 
+* Installer le client Webpack
+
+```
+npm install --save-dev webpack-cli
+```
+
 * Visualiser le répertoire _node_modules/.bin_.
 
-* Exécuter Webpack
 
-```
-node_modules/.bin/webpack
-
-No configuration file found and no output filename configured via CLI option.
-A configuration file could be named 'webpack.config.js' in the current directory.
-Use --help to display the CLI options.
-```
-
-* Créer les fichiers _app/index.js_ et _app/serviceA.js_.
+* Créer les fichiers `dist/index.html`, `src/index.js` et `src/serviceTitre.js`.
 
 ```
 /premiers-pas-webpack
-    /app
+    /dist
+        index.html
+    /src
         index.js
-        serviceA.js
+        serviceTitre.js
 ```
 
-* Compléter les fichiers :
+* Compléter le fichier `dist/index.html` :
 
 ```js
-module.exports.afficher = function() {
-    console.log("Service A");
-};
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Démo Webpack</title>
+
+    <script src="main.js"></script>
+
+</head>
+<body></body>
+</html>
 ```
 
+
+* Compléter le fichier `app/serviceTitre.js` :
 
 ```js
-var serviceA = require("./serviceA");
-
-console.log("bonjour webpack !");
-
-serviceA.afficher();
-```
-
-* Exécuter la commande :
-
-```
-node_modules/.bin/webpack app/index.js build/bundle.js
-```
-
-* Observer le contenu du fichier _build/bundle.js_.
-
-* Créer un fichier _webpack.config.js_
-
-```js
-module.exports = {
-    // définition des points d'entrée
-    // il est possible de définir plusieurs points d'entrée
-    entry: './app/index.js',
-
-    output: {
-        path: "build",
-        filename: "bundle.js"
-    }
+// insérer titre
+export function insererTitre() {
+	document.querySelector('body').insertAdjacentHTML('afterbegin', '<h1>Démo Webpack</h1>');
 }
+```
+
+* Compléter le fichier `src/serviceTitre.js` :
+
+```js
+import { insererTitre } from './serviceTitre';
+
+
+document.addEventListener('DOMContentLoaded', function(event) {
+    insererTitre();
+});
 ```
 
 * Exécuter la commande :
@@ -87,6 +85,12 @@ module.exports = {
 ```
 node_modules/.bin/webpack
 ```
+
+* Visualiser le contenu du fichier généré `dist/main.js`.
+
+* Observer le contenu du fichier _build/main.js_.
+
+* Afficher la page `dist/index.html` et vérifier l'affichage du titre.
 
 * Compléter le fichier _package.json_
 
@@ -94,7 +98,7 @@ node_modules/.bin/webpack
 ...
 "scripts": {
     ...
-    "build" : "webpack",
+    "build" : "webpack --mode production",
     ...
 },
 ...
@@ -106,33 +110,23 @@ node_modules/.bin/webpack
 npm run build
 ```
 
-## Plugin
+## Configuration
 
-### UglifyjsWebpackPlugin
-
-Nous allons à présent _minifier_ le fichier généré à l'aide du plugin _UglifyjsWebpackPlugin_.
-
-
-* Installer le plugin
-
-```
-npm i --save-dev uglifyjs-webpack-plugin
-```
-
-* Configurer le plugin
+* Créer un fichier _webpack.config.js_
 
 ```js
-...
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin'); <1>
+const path = require('path');
 
 module.exports = {
-    entry: { ...},
-    output: { ...},
-    plugins: [
-        new UglifyJSPlugin() <2>
-    ]
+    entry: './src/index.js',
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    }
 };
 ```
+
+Noter que le nom du fichier de sortie est désormais `dist/bundle.js` et non `dist/main.js`.
 
 * Exécuter la commande :
 
@@ -140,40 +134,9 @@ module.exports = {
 npm run build
 ```
 
-* Observer le fichier _./build/bundle.js_.
+* Vérifier la présence du fichier `dist/bundle.js`.
 
-### HtmlWebpackPlugin
-
-* Installer le plugin :
-
-```
-npm install html-webpack-plugin --save-dev
-```
-
-* Configurer le plugin
-
-```js
-...
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-
-module.exports = {
-    entry: {...},
-
-    output: {...},
-    plugins: [
-       ...,
-        new HtmlWebpackPlugin()
-    ]
-};
-```
-
-* Exécuter la commande :
-
-```
-npm run build
-```
-
-* Observer le fichier _./build/index.html_.
+* Modifier le fichier `index.html` pour qu'il soit cohérent avec notre nouvelle configuration et supprimer le fichier `main.js`.
 
 ## Webpack Dev Server
 
@@ -183,16 +146,40 @@ npm run build
 npm install webpack-dev-server --save-dev
 ```
 
-* Ajouter une tâche NPM _server_ :
+* Compléter la configuration Webpack comme suit :
 
+```js
+const path = require('path');
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 8081
+    },
+    devtool: "cheap-module-eval-source-map",
+    mode : "development"
+};
+```
+
+* Ajouter une tâche NPM `start` :
 
 ```js
 ...
 "scripts" : {
     ...
-    "serve": "webpack-dev-server",
+    "start": "webpack-dev-server",
     ...
 }
 ```
 
-* Tester le serveur Web avec _npm run serve_. Vérifier le rechargement à chaud de vos modifications.
+* Tester le serveur Web avec `npm start`.
+
+* Vérifier le rechargement à chaud de vos modifications.
+
+* Vérifier que vous pouvez faire du _debug_ sur vos sources initiales via les outils de développement de votre navigateur.

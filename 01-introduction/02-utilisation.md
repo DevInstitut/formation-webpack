@@ -3,7 +3,7 @@
 * En ligne de commande (installation globale) :
 
 ```
-webpack <entree.js> <resultat.js>
+webpack
 ```
 
 * Depuis un script Node
@@ -16,4 +16,18 @@ webpack({
 }, function(err, stats) {
   // ...
 });
+```
+
+Structure de projet par défaut Webpack :
+
+```
+/dist
+    index.html
+    main.js (fichier généré par Webpack)
+/src
+    index.js
+    autreModule1.js
+    autreModule2.js
+    /autreModule3
+        autreModule31.js
 ```
